@@ -8,7 +8,7 @@
     let password = '';
     let password2 = '';
 
-    let nameError = false;
+    let nameError = false; 
     let emailError = false;
     let passwordError = false;
     let password2Error = false;
