@@ -23,13 +23,13 @@ export const actions = {
 		// Check if user exists
 		const user = await User.findOne({ email });
 		if (!user) {
-			return invalid(400, { credentials: true });
+			return invalid(400, { invalid: true });
 		}
 
 		// Check if password is correct
 		const validPassword = await argon2.verify(user.password, password);
 		if (!validPassword) {
-			return invalid(400, { credentials: true });
+			return invalid(400, { invalid: true });
 		}
 
 		// Update the user token

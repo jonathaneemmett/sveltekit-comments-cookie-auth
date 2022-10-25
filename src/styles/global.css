@@ -30,3 +30,83 @@ html, body {
 body {
     -webkit-font-smoothing: antialiased;
 }
+
+h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    padding: 1.5rem 1rem;
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: 900;
+    padding: 1.5rem 1rem;
+}
+
+div {
+    width: 100%;
+}
+
+.authContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+}
+
+input {
+    width: 100%;
+    padding: 1.2rem;
+    margin: .5rem 0;
+    border: none;
+    border-radius: 5px;
+    color: rgba(21, 21, 21, 1)
+}
+
+::placeholder {
+    font-size: 1rem;
+}
+
+.authContainer button {
+    width: 100%;
+    padding: 1.2rem;
+    margin: 1rem 0;
+    border: none;
+    border-radius: 5px;
+    color: rgba(255, 255, 255, .8);
+    background: #2f2830;
+    font-weight: 900;
+    font-size: 1.2rem;
+}
+
+p {
+    font-size: 1.1rem;
+    font-weight: 900;
+    padding: 1rem 0;
+}
+
+a {
+    color:  rgba(179, 224, 220, 1);
+    font-weight: 900;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    color: rgba(129, 205, 198, 1)
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+/* Errors */
+.error {
+    color: rgba(255, 0, 0, 1);
+    font-size: .8rem;
+}

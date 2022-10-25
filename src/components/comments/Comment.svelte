@@ -29,9 +29,9 @@
         <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="User image" class="comment-image" />
     </div>
     <div class="comment-right-part">
-        <div class="comment-content">
-            <div class="comment-author">Anonymous</div>
-            <div>{timeSincePost(comment.createdAt)}</div>
+        <div class="comment-header">
+            <span class="comment-author">Anonymous</span>
+            <span class="comment-time">{timeSincePost(comment.createdAt)}</span>
         </div>
         {#if !isEditing}
             <div class='comment-text'>{comment.body}</div>
@@ -69,11 +69,13 @@
 <style>
     .comment {
         display: flex;
+        flex-direction: row;
         margin-bottom: 28px;
     }
 
     .comment-image-container {
         margin-right: 12px;
+        max-width: 6vw;
     }
 
     .comment-image-container img {
@@ -84,14 +86,23 @@
         width: 100%;
     }
 
-    .comment-content {
+    .comment-header {
         display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        margin-bottom: 8px;
+        gap: 1rem;
     }
 
     .comment-author {
-        margin-right: 8px;
         font-size: 20px;
+        font-weight: 600;
         color: rgb(59, 130, 246);
+    }
+
+    .comment-time {
+        font-size: 14px;
+        color: rgba(97, 96, 97, 0.6);
     }
 
     .comment-text {
@@ -102,6 +113,13 @@
         padding: .5rem 1rem 0 0;
     }
 
+    .comment-actions {
+        display: flex;
+        flex-direction: row;
+        margin-top: 8px;
+        gap: 1rem
+    }
+
     button {
         background: none;
         color: #fff;
@@ -110,7 +128,6 @@
         padding: 1rem 0;
         font-size: 1rem;
         cursor: pointer;
-        margin: 0 0.5rem;
     }
 
     button:hover {

@@ -54,9 +54,10 @@
 
 <style>
     .comment-area {
+        width: 100%;
         max-width: 800px;
-        margin: 0 auto;
-        padding: 1rem 0
+        margin: auto;
+        padding: 1rem 0;
     }
 
     .comment-area-controls {
@@ -65,13 +66,15 @@
         align-items: center;
     }
 
+    .comment-area-controls span {
+        width: 50px;
+        text-align: right;
+
+    }
+
     .comment-area-actions {
         display: flex;
         gap: 1rem;
-    }
-
-    .error {
-        color: red;
     }
 
     textarea {

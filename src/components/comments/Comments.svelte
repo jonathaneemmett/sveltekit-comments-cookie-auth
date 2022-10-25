@@ -39,4 +39,9 @@
     </div>
 </div>
 
-<style></style>
+<style>
+    .comments {
+        margin: 2rem auto;
+        max-width: 800px;
+    }
+</style>

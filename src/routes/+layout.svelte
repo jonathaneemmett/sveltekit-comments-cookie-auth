@@ -2,7 +2,7 @@
     import '../styles/global.css';
 </script>
 
-<main>
+<main class="container">
     <slot />
 </main>
 
