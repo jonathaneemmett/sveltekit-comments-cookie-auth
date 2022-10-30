@@ -24,7 +24,8 @@ export function deleteComment(commentId) {
 }
 
 // Update the comment in the store
-export function updateComment(comment) {
+export function updateComment(e) {
+	let comment = e.detail;
 	comments.update((comments) => {
 		return comments.map((c) => {
 			if (c.id === comment.id) {

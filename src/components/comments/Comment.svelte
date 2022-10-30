@@ -1,13 +1,22 @@
 <script>
+    import { page } from '$app/stores';
     import { comments } from '../../stores.js'
     import Comment from "./Comment.svelte";
 	import CommentForm from "./CommentForm.svelte";
-    import {addComment, deleteComment, updateComment, timeSincePost} from '../../utilities/CommentFuncs.js';
+    import { addComment, deleteComment, updateComment, timeSincePost } from '../../utilities/CommentFuncs.js';
 
     export let comment;
     export let activeComment = null;
     export let replies = [];
     export let parentId;
+    
+    // Helper Functions
+    const fiveMinutesAgo = 300000; // 5 minutes in milliseconds
+    const timePassed = new Date().getTime() - new Date(comment.createdAt).getTime() > fiveMinutesAgo;
+    
+    const canReply = Boolean($page?.data?.user?.email);
+    const canEdit = $page?.data?.user?.email === comment.username && !timePassed;    
+    const canDelete = $page?.data?.user?.email === comment.username && !timePassed;
     
     let isEditing = activeComment && activeComment.type === 'editing' ? activeComment.id === comment.id : false;
     let isReplying = activeComment && activeComment.type === 'replying' ? activeComment.id === comment.id : false;
@@ -30,22 +39,28 @@
     </div>
     <div class="comment-right-part">
         <div class="comment-header">
-            <span class="comment-author">Anonymous</span>
+            <span class="comment-author">{comment.username || 'Anonymous'}</span>
             <span class="comment-time">{timeSincePost(comment.createdAt)}</span>
         </div>
         {#if !isEditing}
             <div class='comment-text'>{comment.body}</div>
         {:else}
-            <CommentForm on:add={addComment} parentId={parentId} comment={comment}/>
+            <CommentForm on:add={addComment} on:update={updateComment} parentId={parentId} comment={comment} text={comment.body} hasCancelButton={true} on:close={handleClose}/>
         {/if}
         <div class="comment-actions">
-            <button on:click={() =>  {
-                activeComment = {id: comment.id, type: "editing"};
-            }}>Edit</button>
-            <button on:click={() => deleteComment(comment.id)}>Delete</button>
-            <button on:click={() =>  {
-                activeComment = {id: comment.id, type: "replying"};
-            }}>Reply</button>
+            {#if canReply}
+                <button type="button" on:click={() => {
+                    activeComment = {id: comment.id, type: "replying"};
+                }}>Reply</button>
+            {/if}
+            {#if canEdit}
+                <button type="button" on:click={() => {
+                    activeComment = {id: comment.id, type: "editing"};
+                }}>Edit</button>
+            {/if}
+            {#if canDelete}
+                <button type="button" on:click={() => deleteComment(comment.id)}>Delete</button>
+            {/if} 
         </div>
         {#if isReplying}
             <CommentForm on:add={addComment} parentId={replyId} hasCancelButton={true} on:close={handleClose} />
@@ -70,20 +85,25 @@
     .comment {
         display: flex;
         flex-direction: row;
+        justify-content: space-between;
         margin-bottom: 28px;
     }
 
     .comment-image-container {
         margin-right: 12px;
-        max-width: 6vw;
+        width: 10vh
     }
 
     .comment-image-container img {
-        border-radius: 50px;
+        width: 100%;
+        max-width: 75px;
+        height: auto;
+        border-radius: 50%;
     }
 
     .comment-right-part {
         width: 100%;
+        max-width: 85vw;
     }
 
     .comment-header {

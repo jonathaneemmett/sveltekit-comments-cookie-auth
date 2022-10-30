@@ -18,6 +18,6 @@ export const actions = {
 		});
 
 		// Redirect to login
-		return redirect(302, '/login');
+		throw redirect(302, '/login');
 	}
 };

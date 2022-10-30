@@ -4,8 +4,8 @@ import User from '$lib/models/User.js';
 
 export const load = async ({ locals }) => {
 	// If the user is already logged in, redirect them to the home page
-	if (locals.user) {
-		return redirect(302, '/');
+	if (locals?.user) {
+		throw redirect(302, '/');
 	}
 };
 
@@ -46,6 +46,6 @@ export const actions = {
 		});
 
 		// Redirect to home, or wherever you want
-		return redirect(302, '/');
+		throw redirect(302, '/');
 	}
 };

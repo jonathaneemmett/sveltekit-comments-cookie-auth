@@ -13,6 +13,7 @@ export const actions = {
 		const data = await request.formData();
 		const email = data.get('email');
 		const password = data.get('password');
+		const name = data.get('name');
 
 		// Simple validation
 		if (!email || !password) {
@@ -30,6 +31,7 @@ export const actions = {
 
 		// Create user
 		await User.create({
+			name,
 			email,
 			password: hashedPassword
 		});

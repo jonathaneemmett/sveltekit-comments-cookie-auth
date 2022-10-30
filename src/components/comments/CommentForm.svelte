@@ -1,25 +1,39 @@
 <script>
+    import { page } from '$app/stores';
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
-
+    
     // Global Variables
     export let parentId = '';
     export let hasCancelButton = false;    
     export let text = '';
-
+    export let comment = null;
     // Local Veriables
     let isTextAreaDisabled = false;
 
     // Submit Comment
     function onSubmit () {
-        // Add the comment, reply to the store
-        dispatch('add', {
-            id: crypto.randomUUID(),
-            parentId,
-            body: text,
-            createdAt: new Date(),
-        });
-
+        
+        if(!comment){
+            // Add the comment, reply to the store
+            dispatch('add', {
+                id: crypto.randomUUID(),
+                parentId,
+                body: text,
+                name: $page?.data?.user?.name,
+                username: $page?.data?.user?.email,
+                createdAt: new Date().toISOString(),
+            });
+        } else {
+            // Update the comment, reply to the store
+            dispatch('update', {
+                id: comment.id,
+                parentId: comment.parentId,
+                body: text,
+                username: comment.username,
+                createdAt: comment.createdAt,
+            });
+        }
         // Clear the text area
         text = '';
 
@@ -67,9 +81,9 @@
     }
 
     .comment-area-controls span {
-        width: 50px;
+        width: 100px;
         text-align: right;
-
+        font-size: .8rem;
     }
 
     .comment-area-actions {

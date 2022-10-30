@@ -36,7 +36,7 @@
 
 <h1>Login</h1>
 
-<form class="authContainer" action="?/login" method="POST" use:enhance={({ cancel }) => {
+<form class="authContainer" action="?/login" method="POST" use:enhance={({ cancel}) => {
     if(!validate()) {
         cancel();
     }
